@@ -4,91 +4,94 @@ unit UQueue;
 
 interface
 
+Uses
+    UUser;
+    
 type
     PNode =^ Tnode;
 
     TNode = record
-        data : string;
+        data : TUser; //make each node contain a user
         Next : PNode;
     end;
 
     TQueue = class
     private
-        fFirst, fLast:PNode;
-        fLength : integer;
-        function GetFirst : string;    //get data from first node
+        _First, fLast:PNode;
+        _Length : integer;
+        function GetFirst : TUser;    //get data from first node
     public
         constructor Create;
         destructor Destroy; override;
-        procedure Add(s : string);
-        function Remove : string;
+        procedure Add(serveTime : integer);
+        function Remove : TUser;
         function IsEmpty : boolean;
-        property Length : integer read fLength;
-        property First :string read GetFirst;
+        property Length : integer read _Length;
+        property First : TUser read GetFirst;
     end;
 
 implementation
 
 { TQueue }
 
-procedure TQueue.Add(s : string);
+procedure TQueue.Add(serveTime : integer);
 var
     Newitem : PNode;
 begin
     new(NewItem);
-    NewItem^.data := s;
+    NewItem^.data := TUser.create(serveTime);
     NewItem^.next := nil;
     if IsEmpty then
-         fFirst := NewItem
+         _First := NewItem
     else
          fLast^.Next := NewItem;
     fLast := NewItem;
-    inc(fLength);
+    inc(_Length);
 end;
 
 constructor TQueue.Create;
 begin
     inherited;
-    fFirst := nil;
+    _First := nil;
     fLast := nil;
-    fLength := 0;
+    _Length := 0;
 end;
 
 destructor TQueue.Destroy;
 var
     p:PNode; //pointer we want to remove
 begin
-    while fFirst <> nil do
+    while _First <> nil do
     begin
-        p := fFirst;
-        fFirst := fFirst^.Next;
+        p := _First;
+        _First := _First^.Next;
         dispose(p);
     end;
-    fLength := 0;
+    _Length := 0;
 end;
 
-function TQueue.GetFirst : string;
+function TQueue.GetFirst : TUser;
 begin
  if not IsEmpty then
-     result := fFirst^.data;
+     result := _First^.data;
 end;
 
 function TQueue.IsEmpty : boolean;
 begin
-    result := fFirst = nil;
+    result := _First = nil;
 end;
 
-function TQueue.Remove: string;
+function TQueue.Remove: TUser;
 var
     p:PNode; //pointer we want to remove
 begin
     if not IsEmpty then
     begin
-        result := fFirst^.data;
-        p := fFirst;
-        fFirst := fFirst^.Next;
+        result := _First^.data;
+        p := _First;
+        _First := _First^.Next;
         dispose(p);
-        dec(FLength);
+        dec(_Length);
         if IsEmpty then
             fLast := nil;
     end;
