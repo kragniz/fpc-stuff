@@ -28,6 +28,7 @@ type
         function IsEmpty : boolean;
         property Length : integer read _Length;
         property First : TUser read GetFirst;
+        function display : string;
     end;
 
 implementation
@@ -96,5 +97,20 @@ begin
             fLast := nil;
     end;
 end;
+
+function TQueue.display : string;
+//used for debugging
+var
+    p : PNode;
+begin
+    p := _First;
+    repeat
+    begin
+        writeln('a node!');
+        p := _First^.next;
+    end;
+    until p^.next = nil;
+end;
+
 
 end.

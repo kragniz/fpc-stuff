@@ -10,17 +10,16 @@ uses
 type
     TLoop = class
         private
-            _serving : boolean;
+            _userQueue : TQueue;
         public
             constructor create;
-            property serveTime : boolean read _serving;
     end;
 
 implementation
 
 constructor TLoop.create;
 begin
-    _serving := false;
+    _userQueue := TQueue.Create;
 end;
 
 end.
