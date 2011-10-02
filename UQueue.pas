@@ -1,88 +1,98 @@
-unit ULStack;
-//defines a linked-list implementation of a stack
+unit UQueue;
+//A class defining the behavior of a queue
+{$mode objfpc} //make sure we can use classes
+
 interface
+
 type
-  TStack=class
+  PNode=^Tnode;
 
-    type PNode=^TNode;
-    TNode=record
-      Data:string;
-      next:Pnode;
-    end;
-
-    private
-      FTop:Pnode;
-      Fsize:integer;
-      function GetTop:string;  //inspect top item but leave in place
-    public
-      constructor Create;
-      destructor Destroy;
-      procedure Push(s:string);
-      function Pop:string;
-      function IsEmpty:boolean;
-      property Size: integer read fsize;
-      property Top:string read GetTop;
+  TNode=record
+    data:string;
+    Next:PNode;
   end;
+
+  TLQueue=class
+  private
+    fFirst, fLast:PNode;
+    fLength:integer;
+    function GetFirst:string;  //get data from first node
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Add(s:string);
+    function Remove:string;
+    function IsEmpty:boolean;
+    property Length: integer read fLength;
+    property First:string read GetFirst;
+  end;
+
 implementation
 
-{ TStack }
+{ TLQueue }
 
-constructor TStack.Create;
-begin
-  inherited;
-  fTop:=nil;
-  fSize:=0;
-end;
-
-destructor TStack.Destroy;
-var
-  Scrap:PNode;
-begin
-  while fTop<>nil do
-  begin
-    scrap:=fTop;
-    fTop:=fTop^.Next;
-    dispose(scrap);
-  end;
-  fSize:=0;
-
-end;
-
-function TStack.GetTop: string; //inspect top item but leave in place
-begin
-  if not IsEmpty then
-   result:=fTop^.data;
-end;
-
-function TStack.IsEmpty: boolean;
-begin
-  result:=fTop=nil;
-end;
-
-function TStack.Pop: string;
-var
-  scrap:PNode;
-  begin
-  if not IsEmpty then
-  begin
-    result:=fTop^.data;
-    scrap:=fTop;
-    FTop:=fTop^.Next;
-    dispose(scrap);
-    dec(FSize);
-  end;
-
-end;
-
-procedure TStack.Push(s: string);
+procedure TLQueue.Add(s: string);
 var
   Newitem:PNode;
 begin
   new(NewItem);
   NewItem^.data:=s;
-  NewItem^.next:=FTop;
-  fTop:=NewItem;
-  inc(fSize);
+  NewItem^.next:=nil;
+  if IsEmpty then
+     fFirst:=NewItem
+  else
+     fLast^.Next:=NewItem;
+  fLast:=NewItem;
+  inc(fLength);
+end;
+
+constructor TLQueue.Create;
+begin
+  inherited;
+  fFirst:=nil;
+  fLast:=nil;
+  fLength:=0;
+end;
+
+destructor TLQueue.Destroy;
+var
+  p:PNode; //pointer we want to remove
+begin
+  while fFirst<>nil do
+  begin
+    p:=fFirst;
+    fFirst:=fFirst^.Next;
+    dispose(p);
+  end;
+  fLength:=0;
+end;
+
+function TLQueue.GetFirst: string;
+begin
+ if not IsEmpty then
+   result:=fFirst^.data;
+end;
+
+function TLQueue.IsEmpty: boolean;
+begin
+  result:=fFirst=nil;
+end;
+
+function TLQueue.Remove: string;
+var
+  p:PNode; //pointer we want to remove
+  begin
+  if not IsEmpty then
+  begin
+    result:=fFirst^.data;
+    p:=fFirst;
+    fFirst:=fFirst^.Next;
+    dispose(p);
+    dec(FLength);
+    if IsEmpty then   //if we've just removed the last item
+      fLast:=nil;     //set rear pointer to nil
+  end;
+
 end;
 
 end.
