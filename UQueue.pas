@@ -102,14 +102,18 @@ function TQueue.display : string;
 //used for debugging
 var
     p : PNode;
+    b : boolean;
 begin
     p := _First;
-    repeat
+    b := true;
+    while b do
     begin
-        writeln('a node!');
+        if p^.next = nil then
+            b := false;
+        writeln(p^.data.serveTime);
         p := _First^.next;
+
     end;
-    until p^.next = nil;
 end;
 
 
