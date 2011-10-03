@@ -8,9 +8,10 @@ type
     TServer = class
         private
             _serving : boolean;
+            _efficacy : integer;
         public
             constructor create;
-            property serveTime : boolean read _serving;
+            property serving : boolean read _serving;
     end;
 
 implementation
@@ -18,6 +19,7 @@ implementation
 constructor TServer.create;
 begin
     _serving := false;
+    _efficacy := 100;
 end;
 
 end.

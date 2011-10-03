@@ -11,7 +11,7 @@ type
     PNode =^ Tnode;
 
     TNode = record
-        data : TUser; //make each node contain a user
+        data : TObject; //make each node contain a TObject
         Next : PNode;
     end;
 
@@ -19,15 +19,15 @@ type
     private
         _First, fLast:PNode;
         _Length : integer;
-        function GetFirst : TUser;    //get data from first node
+        function GetFirst : TObject;    //get data from first node
     public
         constructor Create;
         destructor Destroy; override;
-        procedure Add(serveTime : integer);
-        function Remove : TUser;
+        procedure Add(personObject : TObject);
+        function Remove : TObject;
         function IsEmpty : boolean;
         property Length : integer read _Length;
-        property First : TUser read GetFirst;
+        property First : TObject read GetFirst;
         function display : string;
     end;
 
@@ -35,12 +35,12 @@ implementation
 
 { TQueue }
 
-procedure TQueue.Add(serveTime : integer);
+procedure TQueue.Add(personObject : TObject);
 var
     Newitem : PNode;
 begin
     new(NewItem);
-    NewItem^.data := TUser.create(serveTime);
+    NewItem^.data := TObject(personObject);
     NewItem^.next := nil;
     if IsEmpty then
          _First := NewItem
@@ -71,7 +71,7 @@ begin
     _Length := 0;
 end;
 
-function TQueue.GetFirst : TUser;
+function TQueue.GetFirst : TObject;
 begin
  if not IsEmpty then
      result := _First^.data;
@@ -82,7 +82,7 @@ begin
     result := _First = nil;
 end;
 
-function TQueue.Remove: TUser;
+function TQueue.Remove: TObject;
 var
     p:PNode; //pointer we want to remove
 begin
@@ -110,9 +110,9 @@ begin
     begin
         if p^.next = nil then
             b := false;
-        writeln(p^.data.serveTime);
+        //a bit messy: convert back to TUser
+        writeln(TUser(p^.data).serveTime);
         p := _First^.next;
-
     end;
 end;
 
