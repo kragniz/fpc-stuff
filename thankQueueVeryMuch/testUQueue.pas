@@ -16,5 +16,5 @@ begin
     queue.display;}
 	looper := TLoop.create;
 	looper.loop;
-    writeln('done on Linux :)')
+    writeln('done on Linux :-)')
 end.

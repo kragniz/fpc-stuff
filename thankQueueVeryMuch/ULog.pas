@@ -19,10 +19,6 @@ type
 
 implementation
 
-
-
-
-
 constructor TLog.create;
 begin
     writeln('object created');
