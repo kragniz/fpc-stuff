@@ -108,11 +108,11 @@ begin
     b := true;
     while b do
     begin
-        if p^.next = nil then
-            b := false;
-        //a bit messy: convert back to TUser
-        writeln(TUser(p^.data).serveTime);
-        p := _First^.next;
+		if p^.next = nil then
+			b := false;
+		//a bit messy: convert back to TUser
+		writeln(TUser(p^.data).serveTime);
+		p := _First^.next;
     end;
 	result := '';
 end;
