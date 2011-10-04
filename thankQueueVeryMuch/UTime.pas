@@ -22,7 +22,7 @@ implementation
 
 constructor TTime.create;
 begin
-    _currentTime := 72626;
+    _currentTime := 0;
 end;
 
 function TTime.currentTime : integer;

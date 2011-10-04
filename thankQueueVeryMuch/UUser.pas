@@ -13,6 +13,8 @@ type
             constructor create(serveTime : integer);
             procedure getAngry;
             property serveTime : integer read _serveTime;
+            procedure beingServed;
+            function served : boolean;
     end;
 
 implementation
@@ -30,6 +32,16 @@ end;
 procedure TUser.incServeTime(t : integer);
 begin
     _serveTime := _serveTime + t;
+end;
+
+procedure TUser.beingServed;
+begin
+    _serveTime := _serveTime - 1;
+end;
+
+function TUser.served : boolean;
+begin
+    return (_serveTime = 0);
 end;
 
 end.

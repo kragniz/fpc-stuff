@@ -19,15 +19,15 @@ type
     private
         _First, fLast:PNode;
         _Length : integer;
-        function GetFirst : TObject;    //get data from first node
+        function _GetFirst : TObject;    //get data from first node
     public
-        constructor Create;
-        destructor Destroy; override;
-        procedure Add(personObject : TObject);
-        function Remove : TObject;
-        function IsEmpty : boolean;
-        property Length : integer read _Length;
-        property First : TObject read GetFirst;
+        constructor create;
+        destructor destroy; override;
+        procedure add(personObject : TObject);
+        function remove : TObject;
+        function isEmpty : boolean;
+        property length : integer read _Length;
+        property first : TObject read _GetFirst;
         function display : string;
     end;
 
@@ -36,6 +36,7 @@ implementation
 { TQueue }
 
 procedure TQueue.Add(personObject : TObject);
+//add a new object to the rear of the queue
 var
     Newitem : PNode;
 begin
@@ -71,18 +72,21 @@ begin
     _Length := 0;
 end;
 
-function TQueue.GetFirst : TObject;
+function TQueue._GetFirst : TObject;
+//return the first object in the queue
 begin
  if not IsEmpty then
      result := _First^.data;
 end;
 
 function TQueue.IsEmpty : boolean;
+//return true if the queue is empty
 begin
     result := _First = nil;
 end;
 
 function TQueue.Remove: TObject;
+//remove the object at the front of the queue
 var
     p:PNode; //pointer we want to remove
 begin
@@ -99,7 +103,7 @@ begin
 end;
 
 function TQueue.display : string;
-//used for debugging
+//used for debugging - broken
 var
     p : PNode;
     b : boolean;
