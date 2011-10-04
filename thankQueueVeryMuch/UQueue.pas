@@ -114,6 +114,7 @@ begin
         writeln(TUser(p^.data).serveTime);
         p := _First^.next;
     end;
+	result := '';
 end;
 
 
