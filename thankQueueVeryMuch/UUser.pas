@@ -1,6 +1,6 @@
 unit UUser;
 //A class defining the behavior of a user
-{$mode objfpc} //make sure we can use classes
+{$mode objfpc}
 
 interface
 

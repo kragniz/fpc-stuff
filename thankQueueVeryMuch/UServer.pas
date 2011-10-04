@@ -1,6 +1,6 @@
 unit UServer;
 //A class defining the behavior of a server
-{$mode objfpc} //make sure we can use classes
+{$mode objfpc}
 
 interface
 

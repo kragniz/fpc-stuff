@@ -1,6 +1,6 @@
 unit UQueueLoop;
 //Looping class
-{$mode objfpc} //make sure we can use classes
+{$mode objfpc}
 
 	
 interface
