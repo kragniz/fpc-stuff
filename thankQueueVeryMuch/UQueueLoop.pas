@@ -6,7 +6,7 @@ unit UQueueLoop;
 interface
 
 uses
-    UUser, UQueue, UServer, UTime;
+    UUser, UQueue, UServer, UTime, ULog;
     
 type
     TLoop = class
@@ -16,10 +16,12 @@ type
             _userQueue : TQueue;
 			_time : TTime;
 			procedure addUser;
+            procedure serveUser;
+
         public
             constructor create;
 			procedure loop;
-    end;
+                end;
 
 implementation
 
@@ -44,15 +46,21 @@ begin
 		    writeln('added user @ time ' + _time.prettyTime);
 			addUser;
 		end;
+        if not _userQueue.isEmpty then
+            serveUser;
 	end;
-	addUser;
 	//_userQueue.display;
 end;
 
-procedure serveUser;
+procedure TLoop.serveUser;
 begin
-    if TUser(_userQueue.first).served do
-        _userQueue.
+    TUser(_userQueue.first).beingServed; //serve the user for one second
+    
+    if TUser(_userQueue.first).served then
+    begin
+        _userQueue.remove;
+        writeln('removed user');
+    end;
 end;
 
 procedure TLoop.addUser;

@@ -41,7 +41,7 @@ end;
 
 function TUser.served : boolean;
 begin
-    result := (_serveTime = 0);
+    result := (_serveTime < 1);
 end;
 
 end.
